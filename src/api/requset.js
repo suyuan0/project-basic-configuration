@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 18:54:17
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-29 19:10:46
+ * @LastEditTime: 2022-05-29 20:24:15
  * @FilePath: \money\src\api\requset.js
  * @Description: axios封装
  *
@@ -37,7 +37,15 @@ axios.interceptors.request.use(
 axios.interceptors.response.use(
   (response) => {
     //   响应的数据处理
-    return response;
+    const {
+      data,
+      meta: { msg, status },
+    } = response.data;
+    if (status === 200 || status === 201) {
+      return data;
+    }
+    Message.error(msg);
+    return Promise.reject(msg);
   },
   (error) => {
     //   失败处理

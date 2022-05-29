@@ -17,12 +17,11 @@ import {
   FormItem,
   Table,
   TableColumn,
-  Message,
 } from "element-ui";
 
 export default {
   install(Vue) {
-    [Button, Input, Menu, Form, FormItem, Table, TableColumn, Message].forEach(
+    [Button, Input, Menu, Form, FormItem, Table, TableColumn].forEach(
       (component) => {
         Vue.use(component);
       }

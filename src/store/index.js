@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 18:37:01
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-29 19:36:07
+ * @LastEditTime: 2022-05-29 20:20:00
  * @FilePath: \money\src\store\index.js
  * @Description:
  *
@@ -24,8 +24,8 @@ const storePersist = (store) => {
   // 存储方式
   const storage = window.sessionStorage;
   // 取
-  const data = storage.getItem(key)
-  data && store.replaceState(JSON.parse(data))
+  const data = storage.getItem(key);
+  data && store.replaceState(JSON.parse(data));
   store.subscribe((mutations, state) => {
     // 存
     storage.setItem(key, JSON.stringify(state));
@@ -33,8 +33,15 @@ const storePersist = (store) => {
 };
 
 export default new Vuex.Store({
-  state: {},
-  mutations: {},
+  state: {
+    user: {},
+  },
+  mutations: {
+    // 存储用户信息
+    setUser(state, data) {
+      state.user = data
+    },
+  },
   actions: {},
   modules: {},
   plugins: [storePersist],
