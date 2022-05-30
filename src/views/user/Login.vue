@@ -36,6 +36,7 @@
 <script>
 import { mapMutations } from "vuex";
 import { login } from "@/api/user";
+import { getMenus } from "@/api/menu";
 export default {
   name: "Login",
   data() {
@@ -86,7 +87,7 @@ export default {
     };
   },
   methods: {
-    ...mapMutations(["setUser"]),
+    ...mapMutations(["setUser", "setMenus"]),
     /**
      * @description: 用户登录
      * @param {*} formName
@@ -107,8 +108,10 @@ export default {
         try {
           this.loading = true;
           const data = await login(this.model);
-          this.$router.push({name:'HomeLayout'})
           this.setUser(data);
+          const menu = await getMenus();
+          this.setMenus(menu);
+          this.$router.push({ name: "HomeLayout" });
         } catch (error) {
           console.log(error);
         }

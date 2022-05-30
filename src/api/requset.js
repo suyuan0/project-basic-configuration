@@ -2,8 +2,8 @@
  * @Author: 培培
  * @Date: 2022-05-29 18:54:17
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-29 20:24:15
- * @FilePath: \money\src\api\requset.js
+ * @LastEditTime: 2022-05-30 11:02:14
+ * @FilePath: \project-basic-configuration\src\api\requset.js
  * @Description: axios封装
  *
  * Copyright (c) 2022 by 培培 614963845@qq.com, All Rights Reserved.
@@ -11,6 +11,7 @@
 
 import axios from "axios";
 import { Message } from "element-ui";
+import store from "../store";
 // 基地址
 axios.defaults.baseURL = process.env.VUE_APP_BASE_URL;
 // 超时时间
@@ -24,6 +25,7 @@ axios.defaults.timeout = process.env.VUE_APP_TIMEOUT;
 axios.interceptors.request.use(
   (config) => {
     //   请求头处理
+    config.headers.Authorization = store.getters.getToken;
     return config;
   },
   (error) => Promise.reject(error)
@@ -62,6 +64,8 @@ axios.interceptors.response.use(
     switch (status) {
       case 401:
         Message.error("登录超时");
+        // 超时跳转，亲空token跳转到登录页
+        store.dispatch("exit");
         break;
       case 500:
         Message.error("接口请求失败");
