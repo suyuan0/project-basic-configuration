@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-30 11:26:23
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-30 12:01:01
+ * @LastEditTime: 2022-05-30 16:01:49
  * @FilePath: \project-basic-configuration\src\layout\asideComponent.vue
  * @Description: 左侧菜单组件
  * 

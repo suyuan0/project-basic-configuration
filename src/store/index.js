@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 18:37:01
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-30 11:20:46
+ * @LastEditTime: 2022-05-30 16:48:33
  * @FilePath: \project-basic-configuration\src\store\index.js
  * @Description:
  *
@@ -10,7 +10,7 @@
  */
 import Vue from "vue";
 import Vuex from "vuex";
-import router from "../router";
+import router from "router";
 Vue.use(Vuex);
 /**
  * @description: VUEX数据持久化插件

@@ -8,12 +8,15 @@
         <el-form :model="model" :rules="rules" ref="ruleForm">
           <el-form-item prop="username">
             <el-input
+              maxlength="10"
               v-model="model.username"
               prefix-icon="el-icon-user-solid"
             ></el-input>
           </el-form-item>
           <el-form-item prop="password">
             <el-input
+              maxlength="15"
+              type="password"
               v-model="model.password"
               prefix-icon="el-icon-s-goods"
             ></el-input>
@@ -35,8 +38,8 @@
 
 <script>
 import { mapMutations } from "vuex";
-import { login } from "@/api/user";
-import { getMenus } from "@/api/menu";
+import { login } from "api/user";
+import { getMenus } from "api/menu";
 export default {
   name: "Login",
   data() {
@@ -48,8 +51,8 @@ export default {
        * @return {*}
        */
       model: {
-        username: "",
-        password: "",
+        username: "admin",
+        password: "123456",
       },
       /**
        * @description: 验证
@@ -95,29 +98,18 @@ export default {
      * @return {*}
      */
     async userLogin(formName) {
-      let f = false;
-      this.$refs[formName].validate((valid) => {
-        if (valid) {
-          f = true;
-        } else {
-          f = false;
-          return false;
-        }
-      });
-      if (f) {
-        try {
-          this.loading = true;
-          const data = await login(this.model);
-          this.setUser(data);
-          const menu = await getMenus();
-          this.setMenus(menu);
-          this.$router.push({ name: "HomeLayout" });
-        } catch (error) {
-          console.log(error);
-        }
-        this.loading = false;
+      try {
+        await this.$refs.ruleForm.validate();
+        this.loading = true;
+        const data = await login(this.model);
+        this.setUser(data);
+        const menu = await getMenus();
+        this.setMenus(menu);
+        this.$router.push({ name: "HomeLayout" });
+      } catch (error) {
+        console.log(error);
       }
-      f = false;
+      this.loading = false;
     },
     /**
      * @description: 重置
@@ -126,7 +118,11 @@ export default {
      * @return {*}
      */
     reset(fornName) {
-      this.$refs[fornName].resetFields();
+      this.model = {
+        username: "",
+        password: "",
+      };
+      this.$refs.ruleForm.resetFields();
     },
   },
 };

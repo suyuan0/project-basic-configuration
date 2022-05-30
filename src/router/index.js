@@ -1,10 +1,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
-import Login from "../views/user/Login.vue";
-import HomeLayout from "../layout/HomeLayout.vue";
-import store from "../store";
+import Login from "view/user/Login.vue";
+import HomeLayout from "lay/HomeLayout.vue";
+import store from "store";
 Vue.use(VueRouter);
-
+const originalPush = VueRouter.prototype.push;
+VueRouter.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch((err) => err);
+};
 const routes = [
   {
     path: "/login",
@@ -20,17 +23,17 @@ const routes = [
       {
         path: "/welcome",
         name: "welcome",
-        component: () => import("../views/other/welcome.vue"),
+        component: () => import("view/other/welcome.vue"),
       },
       {
         path: "/users",
         name: "users",
-        component: () => import("../views/user/list"),
+        component: () => import("view/user/list"),
       },
       {
         path: "*",
         name: "404",
-        component: () => import("../views/other/404.vue"),
+        component: () => import("view/other/404.vue"),
       },
     ],
   },
