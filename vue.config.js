@@ -1,6 +1,7 @@
 const path = require("path");
 module.exports = {
   devServer: {
+    open: true,
     // 代理
     proxy: {
       "/9yue": {
@@ -23,6 +24,7 @@ module.exports = {
         store: path.resolve(__dirname, "./src/store"),
         utils: path.resolve(__dirname, "./src/utils"),
         router: path.resolve(__dirname, "./src/router"),
+        com: path.resolve(__dirname, "./src/components"),
       },
     },
   },

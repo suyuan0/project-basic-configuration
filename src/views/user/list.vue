@@ -26,75 +26,52 @@
         >添加用户</el-button
       >
     </div>
-    <!-- 表格 -->
-    <el-table border stripe :data="list">
-      <el-table-column type="index" label="#"></el-table-column>
-      <el-table-column prop="username" label="姓名"> </el-table-column>
-      <el-table-column prop="email" label="邮箱"> </el-table-column>
-      <el-table-column prop="mobile" label="电话"> </el-table-column>
-      <el-table-column prop="role_name" label="角色"> </el-table-column>
-      <el-table-column label="状态" width="80">
-        <template v-slot="{ row }">
-          <el-switch
-            @change="(value) => changeState(row, value)"
-            v-model="row.mg_state"
-          ></el-switch>
-        </template>
-      </el-table-column>
-      <el-table-column>
-        <template v-slot="{ row }">
-          <!-- 编辑 -->
-          <el-button
-            @click="
-              dialogShow = true;
-              addModel = { ...row };
-            "
-            type="primary"
-            size="mini"
-            icon="el-icon-edit"
-          ></el-button>
-          <!-- 删除 -->
-          <el-button
-            type="danger"
-            size="mini"
-            icon="el-icon-delete"
-            @click="delUser(row)"
-          ></el-button>
-          <!-- 设置 -->
-          <el-button
-            type="warning"
-            size="mini"
-            icon="el-icon-s-tools"
-            :loading="roleLoading"
-            @click="
-              addModel = { ...row };
-              getRoleList();
-            "
-          ></el-button>
-        </template>
-      </el-table-column>
-    </el-table>
-    <!-- 分页 -->
-    <el-pagination
-      @size-change="
-        (size) => {
-          queryModel.pagesize = size;
-          userSearch();
-        }
-      "
-      @current-change="
-        (page) => {
-          queryModel.pagenum = page;
-          userSearch();
-        }
-      "
-      :current-page="queryModel.pagenum"
-      :page-sizes="[10, 20, 30, 40]"
-      :page-size="queryModel.pagesize"
-      layout="total, sizes, prev, pager, next, jumper"
+    <!-- 表格---分页  -->
+    <!-- 双星绑定page，change包含 pagesize和pagenum的改变 -->
+    <myTable
       :total="total"
+      v-model="queryModel"
+      @change="userSearch"
+      :data="list"
+      :clos="clos"
     >
-    </el-pagination>
+      <template v-slot:status="{ row }">
+        <el-switch
+          @change="(value) => changeState(row, value)"
+          v-model="row.mg_state"
+        ></el-switch>
+      </template>
+      <template v-slot:actions="{ row }">
+        <!-- 编辑 -->
+        <el-button
+          @click="
+            dialogShow = true;
+            addModel = { ...row };
+          "
+          type="primary"
+          size="mini"
+          icon="el-icon-edit"
+        ></el-button>
+        <!-- 删除 -->
+        <el-button
+          type="danger"
+          size="mini"
+          icon="el-icon-delete"
+          @click="delUser(row)"
+        ></el-button>
+        <!-- 设置 -->
+        <el-button
+          type="warning"
+          size="mini"
+          icon="el-icon-s-tools"
+          :loading="roleLoading"
+          @click="
+            addModel = { ...row };
+            getRoleList();
+          "
+        ></el-button>
+      </template>
+    </myTable>
     <!-- 添加模态框 -->
     <el-dialog
       :close-on-click-modal="false"
@@ -128,7 +105,7 @@
       </span>
       <span slot="footer" class="diaglog-footer">
         <el-button @click="cancel">取消</el-button>
-        <el-button type="primary" @click="addUser" :loading="addLoading"
+        <el-button type="primary" @click="addUsers" :loading="addLoading"
           >确定</el-button
         >
       </span>
@@ -161,6 +138,43 @@
 </template>
 
 <script>
+/**
+ * @description: 列
+ * @Author: 培培
+ * @return {*}
+ */
+const clos = [
+  {
+    type: "index",
+    title: "#",
+  },
+  {
+    title: "姓名",
+    name: "username",
+  },
+  {
+    title: "邮箱",
+    name: "email",
+  },
+  {
+    title: "电话",
+    name: "mobile",
+  },
+  {
+    title: "角色",
+    name: "role_name",
+  },
+  {
+    title: "状态",
+    width: "80",
+    slot: "status",
+  },
+  {
+    title: "操作",
+    align: "center",
+    slot: "actions",
+  },
+];
 import { getRoles } from "api/role";
 import {
   search,
@@ -170,10 +184,25 @@ import {
   deleteUser,
   assingRole,
 } from "api/user";
+/**
+ * @description: 列
+ * @Author: 培培
+ * @return {*}
+ */
+const cols = [
+  {
+    title: "#",
+    type: "index",
+  },
+  {
+    title: "姓名",
+  },
+];
 export default {
   name: "userList",
   data() {
     return {
+      clos,
       /**
        * @description: 数据模型
        * @Author: 培培
@@ -302,6 +331,7 @@ export default {
       },
     };
   },
+  updated() {},
   computed: {
     /**
      * @description: 判断添加或编辑
@@ -349,17 +379,19 @@ export default {
      * @Author: 培培
      * @return {*}
      */
-    async addUser() {
+    async addUsers() {
       try {
         await this.$refs.addForm.validate();
         this.addLoading = true;
         (await this.isAdd)
           ? addUser(this.addModel)
           : editUser(this.addModel.id, this.addModel);
-        this.$m.success(`${this.isAdd ? "添加" : "修改"}成功`);
         this.userSearch();
+        this.$m.success(`${this.isAdd ? "添加" : "修改"}成功`);
         this.dialogShow = false;
-      } catch (error) {}
+      } catch (error) {
+        console.log(error);
+      }
       this.addLoading = false;
     },
     /**
@@ -423,8 +455,5 @@ export default {
 .search-input {
   width: 400px;
   margin-right: 20px;
-}
-.el-table {
-  margin: 20px 0;
 }
 </style>

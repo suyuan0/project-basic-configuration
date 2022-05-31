@@ -31,6 +31,11 @@ const routes = [
         component: () => import("view/user/list"),
       },
       {
+        path: "/roles",
+        name: "roles",
+        component: () => import("view/rights/roleList"),
+      },
+      {
         path: "*",
         name: "404",
         component: () => import("view/other/404.vue"),

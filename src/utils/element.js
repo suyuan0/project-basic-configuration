@@ -2,12 +2,18 @@
  * @Author: 培培
  * @Date: 2022-05-29 19:20:55
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-31 11:48:00
+ * @LastEditTime: 2022-05-31 16:20:04
  * @FilePath: \project-basic-configuration\src\utils\element.js
  * @Description: element组件引入
  *
  * Copyright (c) 2022 by 培培 614963845@qq.com, All Rights Reserved.
  */
+/**
+ * @description: 引入table组件
+ * @Author: 培培
+ * @return {*}
+ */
+import myTable from "com/Table";
 
 import {
   Button,
@@ -30,7 +36,6 @@ import {
   Select,
   Option,
 } from "element-ui";
-
 export default {
   install(Vue) {
     Vue.prototype.$mb = MessageBox;
@@ -50,26 +55,27 @@ export default {
         });
       });
     };
-    [
-      Select,
-      Option,
-      Dialog,
-      Pagination,
-      Button,
-      Input,
-      Menu,
-      Form,
-      FormItem,
-      Table,
-      TableColumn,
-      MenuItemGroup,
-      MenuItem,
-      Submenu,
-      Breadcrumb,
-      BreadcrumbItem,
-      Switch,
-    ].forEach((component) => {
-      Vue.use(component);
-    });
+    [myTable].forEach((component) => Vue.component(component.name, component)),
+      [
+        Select,
+        Option,
+        Dialog,
+        Pagination,
+        Button,
+        Input,
+        Menu,
+        Form,
+        FormItem,
+        Table,
+        TableColumn,
+        MenuItemGroup,
+        MenuItem,
+        Submenu,
+        Breadcrumb,
+        BreadcrumbItem,
+        Switch,
+      ].forEach((component) => {
+        Vue.use(component);
+      });
   },
 };
