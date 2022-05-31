@@ -13,7 +13,7 @@ import axios from "axios";
 import { Message } from "element-ui";
 import store from "store";
 // 基地址
-axios.defaults.baseURL = '/shi';
+axios.defaults.baseURL = '/9yue';
 // 超时时间
 axios.defaults.timeout = process.env.VUE_APP_TIMEOUT;
 

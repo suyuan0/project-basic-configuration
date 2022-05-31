@@ -17,7 +17,14 @@
           icon="el-icon-search"
         ></el-button>
       </el-input>
-      <el-button type="primary" @click="dialogShow = true">添加用户</el-button>
+      <el-button
+        type="primary"
+        @click="
+          addModel = { username: '', password: '', email: '', phone: '' };
+          dialogShow = true;
+        "
+        >添加用户</el-button
+      >
     </div>
     <!-- 表格 -->
     <el-table border stripe :data="list">
@@ -37,18 +44,32 @@
       <el-table-column>
         <template v-slot="{ row }">
           <!-- 编辑 -->
-          <el-button type="primary" size="mini" icon="el-icon-edit"></el-button>
+          <el-button
+            @click="
+              dialogShow = true;
+              addModel = { ...row };
+            "
+            type="primary"
+            size="mini"
+            icon="el-icon-edit"
+          ></el-button>
           <!-- 删除 -->
           <el-button
             type="danger"
             size="mini"
             icon="el-icon-delete"
+            @click="delUser(row)"
           ></el-button>
           <!-- 设置 -->
           <el-button
             type="warning"
             size="mini"
             icon="el-icon-s-tools"
+            :loading="roleLoading"
+            @click="
+              addModel = { ...row };
+              getRoleList();
+            "
           ></el-button>
         </template>
       </el-table-column>
@@ -75,7 +96,11 @@
     >
     </el-pagination>
     <!-- 添加模态框 -->
-    <el-dialog :visible.sync="dialogShow" title="添加用户">
+    <el-dialog
+      :close-on-click-modal="false"
+      :visible.sync="dialogShow"
+      :title="(isAdd ? '添加' : '编辑') + '用户'"
+    >
       <span>
         <el-form
           ref="addForm"
@@ -84,9 +109,13 @@
           :model="addModel"
         >
           <el-form-item label="用户名" prop="username">
-            <el-input maxlength="10" v-model="addModel.username"></el-input>
+            <el-input
+              :disabled="!isAdd"
+              maxlength="10"
+              v-model="addModel.username"
+            ></el-input>
           </el-form-item>
-          <el-form-item label="密码" prop="password">
+          <el-form-item v-if="isAdd" label="密码" prop="password">
             <el-input maxlength="15" v-model="addModel.password"></el-input>
           </el-form-item>
           <el-form-item label="邮箱" prop="email">
@@ -99,14 +128,48 @@
       </span>
       <span slot="footer" class="diaglog-footer">
         <el-button @click="cancel">取消</el-button>
-        <el-button type="primary" @click="addUser" :loading="loading" >确定</el-button>
+        <el-button type="primary" @click="addUser" :loading="addLoading"
+          >确定</el-button
+        >
       </span>
+    </el-dialog>
+    <!-- 分配角色模态框 -->
+    <el-dialog
+      :close-on-click-modal="false"
+      :visible.sync="roleDialogShow"
+      title="分配角色"
+    >
+      <p>当前用户：{{ addModel.username }}</p>
+      <p>当前的角色：{{ addModel.role_name }}</p>
+      <p>
+        分配新角色
+        <el-select v-model="addModel.role_name" placeholder="请选择">
+          <el-option
+            v-for="item in roleList"
+            :key="item.id"
+            :label="item.role_name"
+            :value="item.id"
+          ></el-option>
+        </el-select>
+      </p>
+      <div slot="footer">
+        <el-button @click="roleDialogShow = false">取消</el-button>
+        <el-button type="primary" @click="assingUserRole">确定</el-button>
+      </div>
     </el-dialog>
   </div>
 </template>
 
 <script>
-import { search, switchState, addUser } from "api/user";
+import { getRoles } from "api/role";
+import {
+  search,
+  switchState,
+  addUser,
+  editUser,
+  deleteUser,
+  assingRole,
+} from "api/user";
 export default {
   name: "userList",
   data() {
@@ -134,17 +197,41 @@ export default {
        */
       list: [],
       /**
+       * @description: 角色列表
+       * @Author: 培培
+       * @return {*}
+       */
+      roleList: [],
+      /**
        * @description: 模态框的显示隐藏
        * @Author: 培培
        * @return {*}
        */
       dialogShow: false,
       /**
+       * @description: 分配角色模态框
+       * @Author: 培培
+       * @return {*}
+       */
+      roleDialogShow: false,
+      /**
        * @description: 搜索动画
        * @Author: 培培
        * @return {*}
        */
       loading: false,
+      /**
+       * @description: 添加loading
+       * @Author: 培培
+       * @return {*}
+       */
+      addLoading: false,
+      /**
+       * @description: 分配角色loading
+       * @Author: 培培
+       * @return {*}
+       */
+      roleLoading: false,
       /**
        * @description: 添加数据模型
        * @Author: 培培
@@ -215,6 +302,16 @@ export default {
       },
     };
   },
+  computed: {
+    /**
+     * @description: 判断添加或编辑
+     * @Author: 培培
+     * @return {*}
+     */
+    isAdd() {
+      return this.addModel.id ? false : true;
+    },
+  },
   mounted() {
     this.userSearch();
   },
@@ -255,13 +352,15 @@ export default {
     async addUser() {
       try {
         await this.$refs.addForm.validate();
-        this.loading = true;
-        await addUser(this.addModel);
-        this.$m.success("添加成功");
+        this.addLoading = true;
+        (await this.isAdd)
+          ? addUser(this.addModel)
+          : editUser(this.addModel.id, this.addModel);
+        this.$m.success(`${this.isAdd ? "添加" : "修改"}成功`);
         this.userSearch();
         this.dialogShow = false;
       } catch (error) {}
-      this.loading = false;
+      this.addLoading = false;
     },
     /**
      * @description: 取消添加
@@ -271,6 +370,50 @@ export default {
     cancel() {
       this.dialogShow = false;
       this.$refs.addForm.resetFields();
+    },
+    /**
+     * @description: 删除用户
+     * @Author: 培培
+     * @param {row}
+     * @return {*}
+     */
+    async delUser(row) {
+      let close;
+      try {
+        close = await this.$confirm(`确定删除${row.username}吗？`);
+        await deleteUser(row.id);
+        this.$m.success("删除成功");
+        this.userSearch();
+      } catch (error) {}
+      close && close();
+    },
+    /**
+     * @description: 获取角色列表
+     * @Author: 培培
+     * @return {*}
+     */
+    async getRoleList() {
+      try {
+        this.roleLoading = true;
+        this.roleList = await getRoles();
+        this.roleDialogShow = true;
+      } catch (error) {}
+      this.roleLoading = false;
+    },
+    /**
+     * @description: 分配用户角色
+     * @Author: 培培
+     * @return {*}
+     */
+    async assingUserRole() {
+      try {
+        this.addLoading = true;
+        await assingRole(this.addModel.id, this.addModel.role_name);
+        this.$m.success("角色分配成功");
+        this.roleDialogShow = false;
+        this.userSearch();
+      } catch (error) {}
+      this.addLoading = false;
     },
   },
 };
