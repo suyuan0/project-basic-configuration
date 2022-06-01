@@ -13,7 +13,7 @@
           </el-tag>
         </div>
         <div class="right">
-          <Tag :row="item.children" />
+          <Tag v-if="item.children" :row="item.children" />
         </div>
       </template>
       <template v-else>
