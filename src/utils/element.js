@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 19:20:55
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-01 10:44:36
+ * @LastEditTime: 2022-06-01 16:57:31
  * @FilePath: \project-basic-configuration\src\utils\element.js
  * @Description: element组件引入
  *
@@ -14,7 +14,8 @@
  * @return {*}
  */
 import myTable from "com/Table";
-
+import MyDialog from "com/Dialog";
+import MyForm from "com/Form";
 import {
   Button,
   Input,
@@ -56,7 +57,19 @@ export default {
         });
       });
     };
-    [myTable].forEach((component) => Vue.component(component.name, component)),
+    /**
+     * @description:自定义组件
+     * @Author: 培培
+     * @return {*}
+     */
+    [myTable, MyForm, MyDialog].forEach((component) =>
+      Vue.component(component.name, component)
+    ),
+      /**
+       * @description: elementUI组件
+       * @Author: 培培
+       * @return {*}
+       */
       [
         Tag,
         Select,

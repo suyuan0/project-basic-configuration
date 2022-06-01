@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-06-01 08:14:47
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-01 10:26:28
+ * @LastEditTime: 2022-06-01 19:21:08
  * @FilePath: \project-basic-configuration\src\views\rights\roleList.vue
  * @Description: 
  * 
@@ -10,11 +10,16 @@
 -->
 <template>
   <div>
-    <el-button type="primary">添加角色</el-button>
+    <el-button type="primary" @click="$refs.dialog.show()">添加角色</el-button>
+    <!-- 表格--分页 -->
     <myTable :tree-props="{ children: 'a' }" :data="roleList" :clos="clos">
       <!-- 展开列 -->
       <template v-slot:expand="{ row }">
-        <Tag :row="row.children"></Tag>
+        <Tag
+          @deleteTag="getRoleList"
+          :roleId="row.id"
+          :row="row.children"
+        ></Tag>
       </template>
       <!-- 操作 -->
       <template v-slot:action="{ row }">
@@ -29,11 +34,46 @@
         >
       </template>
     </myTable>
+    <!-- 模态框（添加--修改） -->
+    <Dialog
+      title="添加角色"
+      ref="dialog"
+      @determine="$refs.dialog.openLoading()"
+    >
+      <Form :formOptions="formObj"></Form>
+    </Dialog>
   </div>
 </template>
 
 <script>
 import Tag from "./components/Tag.vue";
+/**
+ * @description: 表单数据
+ * @Author: 培培
+ * @return {*}
+ */
+const formObj = {
+  roleName: {
+    title: "角色名称",
+    max: 18,
+    type: "password",
+    disabled: false,
+    value: "",
+    required: true,
+    rules: [{ required: true }, { min: 2, max: 10 }],
+  },
+  roleDesc: {
+    title: "角色描述",
+    max: 100,
+    disabled: false,
+    required: true,
+  },
+};
+/**
+ * @description: 表格列
+ * @Author: 培培
+ * @return {*}
+ */
 const clos = [
   {
     type: "expand",
@@ -76,6 +116,12 @@ export default {
        * @return {*}
        */
       clos,
+      /**
+       * @description: 表单配置项
+       * @Author: 培培
+       * @return {*}
+       */
+      formObj,
     };
   },
   created() {
