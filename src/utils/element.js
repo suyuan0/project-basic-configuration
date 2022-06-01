@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 19:20:55
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-31 16:20:04
+ * @LastEditTime: 2022-06-01 10:44:36
  * @FilePath: \project-basic-configuration\src\utils\element.js
  * @Description: element组件引入
  *
@@ -35,6 +35,7 @@ import {
   Dialog,
   Select,
   Option,
+  Tag,
 } from "element-ui";
 export default {
   install(Vue) {
@@ -57,6 +58,7 @@ export default {
     };
     [myTable].forEach((component) => Vue.component(component.name, component)),
       [
+        Tag,
         Select,
         Option,
         Dialog,

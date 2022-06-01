@@ -1,18 +1,39 @@
+<!--
+ * @Author: 培培
+ * @Date: 2022-06-01 08:14:47
+ * @LastEditors: 培培 614963845@qq.com
+ * @LastEditTime: 2022-06-01 10:26:28
+ * @FilePath: \project-basic-configuration\src\views\rights\roleList.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by 培培 614963845@qq.com, All Rights Reserved. 
+-->
 <template>
   <div>
     <el-button type="primary">添加角色</el-button>
     <myTable :tree-props="{ children: 'a' }" :data="roleList" :clos="clos">
       <!-- 展开列 -->
       <template v-slot:expand="{ row }">
-        {{ row }}
+        <Tag :row="row.children"></Tag>
       </template>
       <!-- 操作 -->
-      <template v-slot:action="{ row }"> </template>
+      <template v-slot:action="{ row }">
+        <el-button size="mini" icon="el-icon-edit" type="primary"
+          >编辑</el-button
+        >
+        <el-button size="mini" icon="el-icon-delete" type="danger"
+          >删除</el-button
+        >
+        <el-button size="mini" icon="el-icon-s-tools" type="warning"
+          >分配权限</el-button
+        >
+      </template>
     </myTable>
   </div>
 </template>
 
 <script>
+import Tag from "./components/Tag.vue";
 const clos = [
   {
     type: "expand",
@@ -38,6 +59,9 @@ const clos = [
 import { getRoles } from "api/role";
 export default {
   name: "roleList",
+  components: {
+    Tag,
+  },
   data() {
     return {
       /**

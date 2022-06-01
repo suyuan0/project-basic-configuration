@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 18:54:17
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-30 18:51:48
+ * @LastEditTime: 2022-06-01 10:30:19
  * @FilePath: \project-basic-configuration\src\api\requset.js
  * @Description: axios封装
  *
@@ -13,7 +13,7 @@ import axios from "axios";
 import { Message } from "element-ui";
 import store from "store";
 // 基地址
-axios.defaults.baseURL = '/9yue';
+axios.defaults.baseURL = '/shi';
 // 超时时间
 axios.defaults.timeout = process.env.VUE_APP_TIMEOUT;
 
@@ -52,7 +52,7 @@ axios.interceptors.response.use(
   (error) => {
     //   失败处理
     const msg = error.toString();
-    if (msg.includes("Newwork Error")) {
+    if (msg.includes("Network Error")) {
       Message.error("网络错误");
       return Promise.reject(error);
     }
