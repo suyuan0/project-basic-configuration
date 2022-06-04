@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 19:20:55
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-01 16:57:31
+ * @LastEditTime: 2022-06-04 16:54:34
  * @FilePath: \project-basic-configuration\src\utils\element.js
  * @Description: element组件引入
  *
@@ -16,6 +16,8 @@
 import myTable from "com/Table";
 import MyDialog from "com/Dialog";
 import MyForm from "com/Form";
+import DialogForm from "com/DialogForm";
+import Search from "com/Search";
 import {
   Button,
   Input,
@@ -37,6 +39,7 @@ import {
   Select,
   Option,
   Tag,
+  Tree,
 } from "element-ui";
 export default {
   install(Vue) {
@@ -62,7 +65,7 @@ export default {
      * @Author: 培培
      * @return {*}
      */
-    [myTable, MyForm, MyDialog].forEach((component) =>
+    [myTable, MyForm, MyDialog, DialogForm, Search].forEach((component) =>
       Vue.component(component.name, component)
     ),
       /**
@@ -71,6 +74,7 @@ export default {
        * @return {*}
        */
       [
+        Tree,
         Tag,
         Select,
         Option,

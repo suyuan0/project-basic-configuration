@@ -1,3 +1,13 @@
+<!--
+ * @Author: 培培
+ * @Date: 2022-06-01 21:44:49
+ * @LastEditors: 培培 614963845@qq.com
+ * @LastEditTime: 2022-06-02 11:27:34
+ * @FilePath: \project-basic-configuration\src\components\Dialog.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by 培培 614963845@qq.com, All Rights Reserved. 
+-->
 <template>
   <el-dialog
     :close-on-click-modal="false"
@@ -6,7 +16,7 @@
     ><slot></slot>
     <div slot="footer">
       <slot name="footer">
-        <el-button @click="diaLogShow = false">取消</el-button>
+        <el-button @click="$emit('cancel')">取消</el-button>
         <el-button :loading="loading" @click="$emit('determine')" type="primary"
           >确定</el-button
         >

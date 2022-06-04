@@ -1,31 +1,11 @@
 <template>
   <div>
     <!-- 搜索 -->
-    <div class="search">
-      <el-input
-        placeholder="请输入内容"
-        v-model="queryModel.query"
-        class="search-input"
-      >
-        <el-button
-          :loading="loading"
-          slot="append"
-          @click="
-            queryModel.pagenum = 1;
-            userSearch();
-          "
-          icon="el-icon-search"
-        ></el-button>
-      </el-input>
-      <el-button
-        type="primary"
-        @click="
-          addModel = { username: '', password: '', email: '', phone: '' };
-          dialogShow = true;
-        "
-        >添加用户</el-button
-      >
-    </div>
+    <search
+      btnText="添加用户"
+      v-model="queryModel.query"
+      @search="userSearch"
+    />
     <!-- 表格---分页  -->
     <!-- 双星绑定page，change包含 pagesize和pagenum的改变 -->
     <myTable
@@ -451,9 +431,4 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
-.search-input {
-  width: 400px;
-  margin-right: 20px;
-}
-</style>
+<style lang="scss" scoped></style>

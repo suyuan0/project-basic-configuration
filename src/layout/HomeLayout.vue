@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 20:25:41
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-05-30 19:26:53
+ * @LastEditTime: 2022-06-02 08:44:09
  * @FilePath: \project-basic-configuration\src\layout\HomeLayout.vue
  * @Description: 布局页
  * 
@@ -20,7 +20,7 @@
     <div class="main">
       <aside-component></aside-component>
       <main>
-        <el-breadcrumb separator-class="el-icon-arrow-right">
+        <el-breadcrumb v-if="parentName" separator-class="el-icon-arrow-right">
           <el-breadcrumb-item :to="{ name: 'HomeLayout' }"
             >首页</el-breadcrumb-item
           >
