@@ -5,6 +5,7 @@
       btnText="添加用户"
       v-model="queryModel.query"
       @search="userSearch"
+      :loading="loading"
     />
     <!-- 表格---分页  -->
     <!-- 双星绑定page，change包含 pagesize和pagenum的改变 -->

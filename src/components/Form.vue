@@ -16,6 +16,19 @@
           :type="item.type"
           :placeholder="item.pl"
         ></el-input>
+        <!-- 生成upload -->
+        <el-upload
+          v-else-if="item.tag === 'upload'"
+          class="upload-demo"
+          :action="item.action"
+          :headers="item.headers"
+          :on-remove="(file, fileList) => handleRemove(key, fileList)"
+          :file-list="model[key]"
+          list-type="picture"
+          :on-success="(esponse, file, fileList) => upSuccess(key, fileList)"
+        >
+          <el-button size="small" type="primary">点击上传</el-button>
+        </el-upload>
       </el-form-item>
     </el-form>
   </div>
@@ -48,6 +61,20 @@ export default {
     },
   },
   methods: {
+    // 上传成功
+    upSuccess(key, fileList) {
+      this.model[key] = fileList
+    },
+    /**
+     * @description: 删除图片
+     * @param {*} file
+     * @param {*} fileList
+     * @Author: 培培
+     * @return {*}
+     */
+    handleRemove(key, fileList) {
+      this.model[key] = fileList
+    },
     /**
      * @description: 判断是否为数字
      * @Author: 培培

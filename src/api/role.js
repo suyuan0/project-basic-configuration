@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-31 11:54:27
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-04 16:21:04
+ * @LastEditTime: 2022-06-04 17:30:56
  * @FilePath: \project-basic-configuration\src\api\role.js
  * @Description: 获取角色模块
  *
@@ -53,7 +53,7 @@ export const updateRoles = (model) => requset.put(`/roles/${model.id}`, model);
 export const deleteRoles = (id) => requset.delete(`/roles/${id}`);
 
 /**
- * @description: 获取权限列表
+ * @description: 获取权限列表(树)
  * @Author: 培培
  * @return {*}
  */
@@ -68,3 +68,10 @@ export const getRightList = () => requset.get("rights/tree");
  */
 export const updateRights = (roleId, rids) =>
   requset.post(`roles/${roleId}/rights`, { rids });
+
+/**
+ * @description: 获取权限列表
+ * @Author: 培培
+ * @return {*}
+ */
+export const getRights = () => requset.get("rights/list");

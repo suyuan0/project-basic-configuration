@@ -1,3 +1,13 @@
+<!--
+ * @Author: 培培
+ * @Date: 2022-06-02 11:37:49
+ * @LastEditors: 培培 614963845@qq.com
+ * @LastEditTime: 2022-06-04 17:26:45
+ * @FilePath: \project-basic-configuration\src\components\DialogForm.vue
+ * @Description: 
+ * 
+ * Copyright (c) 2022 by 培培 614963845@qq.com, All Rights Reserved. 
+-->
 <template>
   <div>
     <Dialog :title="title" ref="dialog" @determine="confirm" @cancel="cancel">
@@ -64,7 +74,6 @@ export default {
     cancel() {
       this.$refs.dialog.hide();
       this.$refs.form.resetFields();
-      this.$emit("cancel");
     },
   },
 };

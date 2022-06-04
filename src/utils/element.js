@@ -19,6 +19,7 @@ import MyForm from "com/Form";
 import DialogForm from "com/DialogForm";
 import Search from "com/Search";
 import {
+  Upload,
   Button,
   Input,
   Menu,
@@ -74,6 +75,7 @@ export default {
        * @return {*}
        */
       [
+        Upload,
         Tree,
         Tag,
         Select,

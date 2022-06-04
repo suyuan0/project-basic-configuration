@@ -14,9 +14,9 @@
         icon="el-icon-search"
       ></el-button>
     </el-input>
-    <el-button v-if="btnText" type="primary" @click="$emit('add')"
-      >添加用户</el-button
-    >
+    <el-button v-if="btnText" type="primary" @click="$emit('add')">{{
+      btnText
+    }}</el-button>
   </div>
 </template>
 

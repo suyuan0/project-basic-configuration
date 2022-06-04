@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-06-01 08:14:47
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-04 17:14:22
+ * @LastEditTime: 2022-06-04 17:26:21
  * @FilePath: \project-basic-configuration\src\views\rights\roleList.vue
  * @Description: 
  * 
@@ -61,7 +61,6 @@
       :title="title"
       ref="dialog"
       @confirm="addRole"
-      @cancel=""
       :value="model"
       :formOptions="formObj"
     />
