@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-31 16:17:39
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-06 11:29:15
+ * @LastEditTime: 2022-06-06 18:52:00
  * @FilePath: \project-basic-configuration\src\components\Table.vue
  * @Description: 封装table，分页组件
  * 

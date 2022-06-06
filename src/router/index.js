@@ -52,6 +52,11 @@ const routes = [
         component: () => import("view/goods/params"),
       },
       {
+        path: "/categories",
+        name: "categories",
+        component: () => import("view/goods/categories"),
+      },
+      {
         path: "*",
         name: "404",
         component: () => import("view/other/404.vue"),

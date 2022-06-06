@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-06-01 21:44:49
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-04 18:28:22
+ * @LastEditTime: 2022-06-06 17:19:58
  * @FilePath: \project-basic-configuration\src\main.js
  * @Description:
  *
@@ -14,6 +14,9 @@ import router from "./router";
 import store from "./store";
 import "./styles/index.scss";
 import element from "./utils/element";
+import antDesign from "./utils/antDesign";
+import 'ant-design-vue/dist/antd.css';
+Vue.use(antDesign);
 Vue.use(element);
 Vue.config.productionTip = false;
 

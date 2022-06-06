@@ -2,7 +2,7 @@
   <div>
     <myTable :data="rightsList" :clos="clos">
       <template v-slot:level="{ row }">
-        <el-tag :type="color[row.level]">{{ level[row.level] }}级</el-tag>
+        <el-tag :type="color[row.levels]">{{ level[row.levels] }}级</el-tag>
       </template>
     </myTable>
   </div>
@@ -10,10 +10,7 @@
 
 <script>
 import { getRights } from "api/role";
-/**等级 */
-const level = ["一", "二", "三"];
-/**颜色*/
-const color = ["", "success", "warning"];
+import { levels, colors } from "utils/common";
 /**表格列*/
 const clos = [
   {
@@ -37,8 +34,8 @@ export default {
   name: "rightsList",
   data() {
     return {
-      level,
-      color,
+      levels,
+      colors,
       /**权限列表数据*/
       rightsList: [],
       /**表格列 */

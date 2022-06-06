@@ -16,6 +16,13 @@
           :type="item.type"
           :placeholder="item.pl"
         ></el-input>
+        <!-- 生成级联选择器 -->
+        <el-cascader
+          v-else-if="item.tag === 'cascader'"
+          :options="item.value"
+          :props="item.props"
+          v-model="model[key]"
+        ></el-cascader>
         <!-- 生成upload -->
         <el-upload
           v-else-if="item.tag === 'upload'"
@@ -63,7 +70,7 @@ export default {
   methods: {
     // 上传成功
     upSuccess(key, fileList) {
-      this.model[key] = fileList
+      this.model[key] = fileList;
     },
     /**
      * @description: 删除图片
@@ -73,7 +80,7 @@ export default {
      * @return {*}
      */
     handleRemove(key, fileList) {
-      this.model[key] = fileList
+      this.model[key] = fileList;
     },
     /**
      * @description: 判断是否为数字
