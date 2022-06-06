@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-05-29 19:20:55
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-04 16:54:34
+ * @LastEditTime: 2022-06-06 11:11:35
  * @FilePath: \project-basic-configuration\src\utils\element.js
  * @Description: element组件引入
  *
@@ -41,6 +41,11 @@ import {
   Option,
   Tag,
   Tree,
+  Alert,
+  Cascader,
+  Tabs,
+  TabPane,
+  Loading,
 } from "element-ui";
 export default {
   install(Vue) {
@@ -75,6 +80,11 @@ export default {
        * @return {*}
        */
       [
+        Loading,
+        Tabs,
+        TabPane,
+        Cascader,
+        Alert,
         Upload,
         Tree,
         Tag,

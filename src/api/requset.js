@@ -1,9 +1,10 @@
+
 /*
  * @Author: 培培
  * @Date: 2022-05-29 18:54:17
  * @LastEditors: 培培 614963845@qq.com
  * @LastEditTime: 2022-06-01 10:30:19
- * @FilePath: \project-basic-configuration\src\api\requset.js
+ * @FilePath: \ant-designe:\全栈\实训\project-basic-configuration\src\api\requset.js
  * @Description: axios封装
  *
  * Copyright (c) 2022 by 培培 614963845@qq.com, All Rights Reserved.
