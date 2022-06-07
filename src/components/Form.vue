@@ -22,6 +22,7 @@
           :options="item.value"
           :props="item.props"
           v-model="model[key]"
+          :width="item.width"
         ></el-cascader>
         <!-- 生成upload -->
         <el-upload

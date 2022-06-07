@@ -57,6 +57,16 @@ const routes = [
         component: () => import("view/goods/categories"),
       },
       {
+        path: "/orders",
+        name: "orders",
+        component: () => import("view/order/orders"),
+      },
+      {
+        path: "/reports",
+        name: "reports",
+        component: () => import("view/reports/reports"),
+      },
+      {
         path: "*",
         name: "404",
         component: () => import("view/other/404.vue"),

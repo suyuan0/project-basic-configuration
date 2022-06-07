@@ -2,7 +2,7 @@
  * @Author: 培培
  * @Date: 2022-06-01 21:44:49
  * @LastEditors: 培培 614963845@qq.com
- * @LastEditTime: 2022-06-02 11:27:34
+ * @LastEditTime: 2022-06-07 12:44:29
  * @FilePath: \project-basic-configuration\src\components\Dialog.vue
  * @Description: 
  * 
@@ -10,7 +10,7 @@
 -->
 <template>
   <el-dialog
-    :close-on-click-modal="false"
+    :close-on-click-modal="closeModal"
     :title="title"
     :visible.sync="diaLogShow"
     ><slot></slot>
@@ -85,6 +85,10 @@ export default {
      * @return {*}
      */
     title: String,
+    closeModal: {
+      type: Boolean,
+      default: false,
+    },
   },
 };
 </script>

@@ -191,6 +191,7 @@ export default {
      * @return {*}
      */
     async confirm(model) {
+      console.log(model);
       let df = this.$refs.df;
       const data = { ...model };
       let p = data.cat_pid;
@@ -198,7 +199,6 @@ export default {
       data.cat_level = p?.length || 0;
       try {
         df.openLoading();
-        console.log(data);
         await (data.cat_id ? editCates : addCates)(data);
         this.$m.success(`${data.cat_id ? "修改" : "添加"}成功`);
         this.getCateList();
